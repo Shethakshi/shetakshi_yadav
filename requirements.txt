@@ -1,6 +1,4 @@
 numpy
 opencv-python-headless
-Tensorflow
-tensorflow.keras.applications.vgg16
-keras_applications
+tensorflow
 
