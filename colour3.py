@@ -35,25 +35,26 @@ def adjust_sharpness(image, sharpness_factor):
 
 def perform_object_detection(image):
     # Load YOLO weights and configuration
-    net = cv2.dnn.readNetFromDarknet("C:/Users/Shetakshi/Downloads/yolov3.cfg","C:/Users/Shetakshi/Downloads/yolov3.weights")
+    config_path = "C:/Users/Shetakshi/Downloads/yolov3.cfg"
+    weights_path = "C:/Users/Shetakshi/Downloads/yolov3.weights"
+    labels_path = "C:/Users/Shetakshi/Downloads/coco.names"
 
-    # Verify if the network was loaded successfully
+    # Load YOLO weights and configuration
+    net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
+
     if net.empty():
         st.write("Failed to load YOLO network.")
         return image
 
     # Load the class labels
-    with open("C:/Users/Shetakshi/Downloads/coco.names", 'r') as f:
+    with open(labels_path, 'r') as f:
         classes = [line.strip() for line in f.readlines()]
-
-    layer_names = net.getLayerNames()
-    output_layers = []
-        # for i in net.getUnconnectedOutLayers():
-        #   output_layers.append(layer_names[i[0] - 1])
 
     # Get the output layer names
     layer_names = net.getLayerNames()
-    #output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    output_layers = []
+    # for i in net.getUnconnectedOutLayers():
+    #   output_layers.append(layer_names[i[0] - 1])
 
     output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
