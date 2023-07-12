@@ -35,11 +35,9 @@ def adjust_sharpness(image, sharpness_factor):
 
 def perform_object_detection(image):
     # Load YOLO weights and configuration
-    config_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
-    weights_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
-    labels_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
+ 
 
-    net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
+    net = cv2.dnn.readNetFromDarknet("C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg", "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights")
 
     # Verify if the network was loaded successfully
     if net.empty():
@@ -47,7 +45,7 @@ def perform_object_detection(image):
         return image
 
     # Load the class labels
-    with open(labels_path, 'r') as f:
+    with open("C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names", 'r') as f:
         classes = [line.strip() for line in f.readlines()]
 
     # Get the output layer names
