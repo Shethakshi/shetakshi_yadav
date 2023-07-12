@@ -3,10 +3,6 @@ import cv2
 import numpy as np
 from PIL import Image, ImageEnhance
 
-#config_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
-#weights_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
-#labels_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
-
 
 def brighten_image(image, amount):
     img_bright = cv2.convertScaleAbs(image, beta=amount)
