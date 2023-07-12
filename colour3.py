@@ -3,6 +3,10 @@ import cv2
 import numpy as np
 from PIL import Image, ImageEnhance
 
+config_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
+weights_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
+labels_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
+
 
 def brighten_image(image, amount):
     img_bright = cv2.convertScaleAbs(image, beta=amount)
@@ -35,7 +39,8 @@ def adjust_sharpness(image, sharpness_factor):
 
 def perform_object_detection(image):
     # Load YOLO weights and configuration
-    net = cv2.dnn.readNetFromDarknet("C:/Users/Shetakshi/Downloads/yolov3.cfg", "C:/Users/Shetakshi/Downloads/yolov3.weights")
+
+    net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
 
     # Verify if the network was loaded successfully
     if net.empty():
@@ -43,7 +48,7 @@ def perform_object_detection(image):
         return image
 
     # Load the class labels
-    with open("C:/Users/Shetakshi/Downloads/coco.names", 'r') as f:
+    with open(labels_path, 'r') as f:
         classes = [line.strip() for line in f.readlines()]
 
     # Get the output layer names
