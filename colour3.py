@@ -33,17 +33,13 @@ def adjust_sharpness(image, sharpness_factor):
     enhanced_image = enhancer.enhance(sharpness_factor)
     return np.array(enhanced_image)
 
+config_path= "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
+weights_path= "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
+labels_path ="C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
 
-def perform_object_detection(image):
-    current_dir = os.path.dirname(st.__file__)
-
-    repo_dir = os.path.join(current_dir, 'shetakshi_yadav')
-    cfg_path = os.path.join(repo_dir, 'yolov3.cfg')
-    weights_path = os.path.join(repo_dir, 'yolov3.weights')
-    names_path = os.path.join(repo_dir, 'coco.names')
-
+def perform_object_detection(image,config_path,weights_path,labels_path):
     # Load YOLO network
-    net = cv2.dnn.readNetFromDarknet(cfg_path, weights_path)
+    net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
 
     # Verify if the network was loaded successfully
     if net.empty():
@@ -51,12 +47,17 @@ def perform_object_detection(image):
         return image
 
     # Load the class labels
-    with open(names_path, 'r') as f:
+    with open(labels_path, 'r') as f:
         classes = [line.strip() for line in f.readlines()]
+
+
 
     # Get the output layer names
     layer_names = net.getLayerNames()
     output_layers = []
+    # for i in net.getUnconnectedOutLayers():
+    #   output_layers.append(layer_names[i[0] - 1])
+
     output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
     # Resize the image for object detection
@@ -72,7 +73,38 @@ def perform_object_detection(image):
     # Perform forward pass and get the output layer outputs
     outputs = net.forward(output_layers)
 
-    # Rest of your code for object detection goes here
+    # Process the outputs
+    class_ids = []
+    confidences = []
+    boxes = []
+
+    for output in outputs:
+        for detection in output:
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
+
+            # Filter out weak detections by confidence threshold
+            if confidence > 0.5:
+                center_x, center_y, w, h = (detection[0:4] * np.array([image.shape[1], image.shape[0], image.shape[1], image.shape[0]])).astype('int')
+                x = int(center_x - w / 2)
+                y = int(center_y - h / 2)
+
+                class_ids.append(class_id)
+                confidences.append(float(confidence))
+                boxes.append([x, y, w, h])
+
+    # Apply non-maximum suppression to remove overlapping bounding boxes
+    indices = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
+
+    # Draw bounding boxes and class labels
+    for i in indices.flatten():
+        x, y, w, h = boxes[i]
+        class_id = class_ids[i]
+        label = f'{classes[class_id]}: {confidences[i]:.2f}'
+
+        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     return image
 
@@ -101,7 +133,7 @@ def main_loop():
     processed_image = adjust_sharpness(processed_image, sharpness_factor)
 
     if enable_object_detection:
-        processed_image = perform_object_detection(processed_image)
+        processed_image = perform_object_detection(processed_image,config_path,weights_path,labels_path)
 
     st.text("Original Image vs Processed Image")
     st.image([original_image, processed_image])
