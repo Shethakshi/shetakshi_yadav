@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 from PIL import Image, ImageEnhance
 
-config_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
-weights_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
-labels_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
+#config_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
+#weights_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
+#labels_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
 
 
 def brighten_image(image, amount):
@@ -39,6 +39,9 @@ def adjust_sharpness(image, sharpness_factor):
 
 def perform_object_detection(image):
     # Load YOLO weights and configuration
+    config_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.cfg"
+    weights_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/yolov3.weights"
+    labels_path = "C:/Users/Shetakshi/OneDrive/Documents/GitHub/shetakshi_yadav/coco.names"
 
     net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
 
