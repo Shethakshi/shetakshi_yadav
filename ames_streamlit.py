@@ -11,7 +11,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 
 # Load the Ames Housing datasets
-@st.cache(allow_output_mutation=True)
+@st._cache(allow_output_mutation=True)
 def load_data():
     ames_train = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_train.csv")
     ames_test = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_test.csv")
