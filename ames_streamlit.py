@@ -9,12 +9,21 @@ from matplotlib.pyplot import figure, ylabel, legend, xlabel, title
 from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
+import os
+
 
 # Load the Ames Housing datasets
-@st._cache(allow_output_mutation=True)
+#@st._cache(allow_output_mutation=True)
+#def load_data():
+ #   ames_train = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_train.csv")
+  #  ames_test = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_test.csv")
+   # return ames_train, ames_test
+
+
 def load_data():
-    ames_train = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_train.csv")
-    ames_test = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_test.csv")
+    data_dir = "C:/Users/Shetakshi/Downloads" # Update this with the directory containing your CSV files
+    ames_train = pd.read_csv(os.path.join(data_dir, "ames_train.csv"))
+    ames_test = pd.read_csv(os.path.join(data_dir, "ames_test.csv"))
     return ames_train, ames_test
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
