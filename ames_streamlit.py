@@ -21,10 +21,10 @@ import os
 
 
 def load_data():
-    data_dir = "C:/Users/Shetakshi/Downloads" # Update this with the directory containing your CSV files
-    ames_train = pd.read_csv(os.path.join(data_dir, "ames_train.csv"))
-    ames_test = pd.read_csv(os.path.join(data_dir, "ames_test.csv"))
+    ames_train = pd.read_csv("ames_train.csv")
+    ames_test = pd.read_csv("ames_test.csv")
     return ames_train, ames_test
+
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
