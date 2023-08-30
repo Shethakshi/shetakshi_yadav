@@ -8,9 +8,14 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 @st.cache_data
+#def load_data():
+ #   ames_train = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_train.csv")
+ #   ames_test = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_test.csv")
+#  return ames_train, ames_test
+
 def load_data():
-    ames_train = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_train.csv")
-    ames_test = pd.read_csv("C:/Users/Shetakshi/Downloads/ames_test.csv")
+    ames_train = pd.read_csv("ames_train.csv")
+    ames_test = pd.read_csv("ames_test.csv")
     return ames_train, ames_test
 
 ames_train, ames_test=load_data()
