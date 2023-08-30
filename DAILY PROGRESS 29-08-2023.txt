@@ -1,0 +1,7 @@
+DAILY PROGRESS: 29-08-2023:
+Completed model building part of the code, added model configuration as well, made some changes/modification.
+Added user flexible options (like inducing options like choosing test size, and random state, histogram feature selection)
+Fixed all the errors while deploying app.
+Revisited lecture on lstms's, completed lecture 6 and lecture 7 on rnn problems- long term dependency problems( linear interaction distance), lack of parallelizability, and attention, self-attention, how the embedding layer works and architecture works, transformers.
+
+Pushed the code in git.
